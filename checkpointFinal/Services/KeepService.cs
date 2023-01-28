@@ -27,11 +27,25 @@ public class KeepService
   {
     Keep keep = _repo.GetKeepById(keepId);
     if (keep == null) throw new Exception("No keep at that Id");
-    if (accountId != null)
-    {
-      keep.views++;
-      _repo.UpdateKeep(keep);
-    }
+    keep.views++;
+    _repo.UpdateKeep(keep);
+    return keep;
+  }
+
+  internal Keep GetKeepForCreateVaultKeep(int keepId)
+  {
+    Keep keep = _repo.GetKeepById(keepId);
+    if (keep == null) throw new Exception("no keep at that id");
+    keep.kept++;
+    _repo.UpdateKeep(keep);
+    return keep;
+  }
+  internal Keep GetKeepForDeleteVaultKeep(int keepId)
+  {
+    Keep keep = _repo.GetKeepById(keepId);
+    if (keep == null) throw new Exception("no keep at that id");
+    keep.kept--;
+    _repo.UpdateKeep(keep);
     return keep;
   }
 

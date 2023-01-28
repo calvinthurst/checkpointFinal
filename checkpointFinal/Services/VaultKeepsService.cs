@@ -15,7 +15,7 @@ public class VaultKeepsService
 
   internal VaultKeeps CreateVaultKeep(VaultKeeps vaultKeepsData)
   {
-    Keep keep = _keepService.GetKeepById(vaultKeepsData.keepId, vaultKeepsData.creatorId);
+    Keep keep = _keepService.GetKeepForCreateVaultKeep(vaultKeepsData.keepId);
     Vault vault = _vaultService.GetVault(vaultKeepsData.vaultId, vaultKeepsData.creatorId);
     if (vaultKeepsData.creatorId != vault.creatorId) throw new Exception("you dont own that vault");
     VaultKeeps vaultKeeps = _repo.CreateVaultKeep(vaultKeepsData);
@@ -25,6 +25,7 @@ public class VaultKeepsService
   internal string DeleteVaultKeep(int id, string accountId)
   {
     VaultKeeps vaultKeeps = _repo.GetOneVaultKeep(id);
+    Keep keep = _keepService.GetKeepForDeleteVaultKeep(vaultKeeps.keepId);
     Vault vault = _vaultService.GetVault(vaultKeeps.vaultId, vaultKeeps.creatorId);
     if (vaultKeeps.creatorId != accountId) throw new Exception("you didn't add that");
     _repo.DeleteVaultKeep(id);
