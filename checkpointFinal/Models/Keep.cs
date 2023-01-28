@@ -12,3 +12,8 @@ public class Keep
   public Account creator { get; set; }
 }
 
+public class KeepVault : Keep
+{
+  public int vaultKeepId { get; set; }
+}
+

@@ -68,6 +68,27 @@ public class KeepRepository
     return keeps;
   }
 
+  internal List<KeepVault> GetKeepsByVaultId(int vaultId)
+  {
+    string sql = @"
+    SELECT
+    k.*,
+    acc.*,
+    v.
+    FROM keeps k
+    JOIN accounts acc ON k.creatorId = acc.id
+    JOIN vault v ON k.vaultId = @vaultId
+    WHERE k.vaultId
+    ";
+    List<KeepVault> vaultKeeps = _db.Query<KeepVault, Account, KeepVault>(sql, (vKeep, account) =>
+    {
+      vKeep.creator = account;
+      return vKeep;
+    }, new { vaultId }).ToList();
+    return vaultKeeps;
+
+  }
+
   internal bool UpdateKeep(Keep keep)
   {
     string sql = @"
