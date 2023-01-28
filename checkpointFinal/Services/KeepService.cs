@@ -41,6 +41,12 @@ public class KeepService
     return keeps;
   }
 
+  internal List<Keep> GetKeepsByAccountId(string accountId)
+  {
+    List<Keep> keeps = _repo.GetKeepsByAccountId(accountId);
+    return keeps;
+  }
+
   internal Keep UpdateKeep(Keep updateData)
   {
     Keep original = _repo.GetKeepById(updateData.id);
