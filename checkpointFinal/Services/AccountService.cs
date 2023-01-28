@@ -3,10 +3,12 @@ namespace checkpointFinal.Services;
 public class AccountService
 {
   private readonly AccountsRepository _repo;
+  private readonly VaultRepository _vaultRepo;
 
-  public AccountService(AccountsRepository repo)
+  public AccountService(AccountsRepository repo, VaultRepository vaultRepo)
   {
     _repo = repo;
+    _vaultRepo = vaultRepo;
   }
 
   internal Account GetProfileByEmail(string email)
@@ -30,5 +32,12 @@ public class AccountService
     original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
     return _repo.Edit(original);
+  }
+
+  internal List<Vault> GetMyVaults(string accountId)
+  {
+    List<Vault> vaults = _vaultRepo.GetMyVaults(accountId);
+    if (vaults == null) throw new Exception("you dont have any vaults");
+    return vaults;
   }
 }

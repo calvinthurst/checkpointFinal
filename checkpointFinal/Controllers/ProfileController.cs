@@ -24,7 +24,7 @@ public class ProfileController : ControllerBase
     {
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
       Account profile = _profileService.GetProfile(id);
-      return profile;
+      return Ok(profile);
     }
     catch (Exception e)
     {
@@ -39,7 +39,7 @@ public class ProfileController : ControllerBase
     {
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
       List<Keep> keeps = _keepService.GetKeepsByAccountId(accountId);
-      return keeps;
+      return Ok(keeps);
     }
     catch (Exception e)
     {
@@ -54,7 +54,7 @@ public class ProfileController : ControllerBase
     {
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
       List<Vault> vaults = _vaultService.GetVaultsByAccountId(profileId, userInfo?.Id);
-      return vaults;
+      return Ok(vaults);
     }
     catch (Exception e)
     {
