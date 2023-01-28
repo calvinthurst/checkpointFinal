@@ -6,13 +6,15 @@ public class ProfileController : ControllerBase
 {
   private readonly ProfileService _profileService;
   private readonly KeepService _keepService;
+  private readonly VaultService _vaultService;
   private readonly Auth0Provider _auth;
 
-  public ProfileController(ProfileService profileService, Auth0Provider auth, KeepService keepService)
+  public ProfileController(ProfileService profileService, Auth0Provider auth, KeepService keepService, VaultService vaultService)
   {
     _profileService = profileService;
     _auth = auth;
     _keepService = keepService;
+    _vaultService = vaultService;
   }
 
   [HttpGet("{id}")]
@@ -38,6 +40,21 @@ public class ProfileController : ControllerBase
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
       List<Keep> keeps = _keepService.GetKeepsByAccountId(accountId);
       return keeps;
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  [HttpGet("{profileId}/vaults")]
+  public async Task<ActionResult<List<Vault>>> GetVaultByAccountId(string profileId)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      List<Vault> vaults = _vaultService.GetVaultsByAccountId(profileId, userInfo?.Id);
+      return vaults;
     }
     catch (Exception e)
     {

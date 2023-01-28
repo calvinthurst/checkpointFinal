@@ -51,6 +51,25 @@ public class VaultRepository
     return vault;
   }
 
+  internal List<Vault> GetVaultsByProfileId(string profileId)
+  {
+    string sql = @"
+    SELECT
+    v.*,
+    acc.*
+    FROM vault v
+    JOIN accounts acc ON v.creatorId = acc.id
+    WHERE v.creatorId = @profileId && v.isPrivate = false;
+    ";
+    List<Vault> vaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+    {
+      vault.creator = account;
+      return vault;
+    }, new { profileId }).ToList();
+    return vaults;
+
+  }
+
   internal bool UpdateVault(Vault original)
   {
     string sql = @"
