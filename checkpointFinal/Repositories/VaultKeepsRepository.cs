@@ -48,7 +48,8 @@ public class VaultKeepsRepository
     ";
     List<KeepVault> vaultKeeps = _db.Query<KeepVault, VaultKeeps, Account, KeepVault>(sql, (ke, vk, ac) =>
     {
-      ke.vaultKeepId = vk.vaultId;
+      ke.vaultId = vk.vaultId;
+      ke.vaultKeepId = vk.id;
       ke.creator = ac;
       return ke;
     }, new { vaultId }).ToList();

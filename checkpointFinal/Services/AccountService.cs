@@ -31,6 +31,7 @@ public class AccountService
     Account original = GetProfileByEmail(userEmail);
     original.Name = editData.Name.Length > 0 ? editData.Name : original.Name;
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
+    original.coverImg = editData.coverImg.Length > 0 ? editData.coverImg : original.coverImg;
     return _repo.Edit(original);
   }
 
@@ -40,4 +41,5 @@ public class AccountService
     if (vaults == null) throw new Exception("you dont have any vaults");
     return vaults;
   }
+
 }

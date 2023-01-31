@@ -14,6 +14,7 @@ public class Keep
 
 public class KeepVault : Keep
 {
+  public int vaultId { get; set; }
   public int vaultKeepId { get; set; }
 }
 

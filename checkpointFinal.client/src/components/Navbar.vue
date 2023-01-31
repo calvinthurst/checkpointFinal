@@ -1,42 +1,42 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 justify-content-between my-3">
+    <div class="d-flex align-items-center justify-content-between col-3" v-if="user != null">
+      <button class="btn btn-outline-secondary fw-bold " data-bs-toggle="modal" data-bs-target="#keep-form">Create
+        Keep</button>
+      <Modal id="keep-form" modal-title="Create Keep">
+        <KeepForm />
+      </Modal>
+      <button class="btn btn-outline-secondary fw-bold " data-bs-toggle="modal" data-bs-target="#vault-form">Create
+        Vault<i class="mdi mdi-safe"></i></button>
+      <Modal id="vault-form" modal-title="Create Vault">
+        <VaultForm />
+      </Modal>
+    </div>
+    <div class="col-3 text-light loggin" v-else>KEEPERS</div>
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+      <div class="d-flex flex-column align-items-center fw-bold col-3">
+        Keepers
       </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
-      <Login />
-    </div>
+
+    <!-- LOGIN COMPONENT HERE -->
+    <Login class="col-2" />
   </nav>
 </template>
 
 <script>
+import KeepForm from "./KeepForm.vue";
 import Login from './Login.vue'
+import VaultForm from "./VaultForm.vue";
+import { computed } from 'vue'
+import { AppState } from '../AppState'
 export default {
   setup() {
-    return {}
+    return {
+      user: computed(() => AppState.account)
+    }
   },
-  components: { Login }
+  components: { Login, KeepForm, VaultForm }
 }
 </script>
 
@@ -55,10 +55,7 @@ a:hover {
   border-bottom-right-radius: 0;
 }
 
-@media screen and (min-width: 768px) {
-  nav {
-    height: 64px;
-  }
+.loggin {
+  user-select: none;
 }
-
 </style>
