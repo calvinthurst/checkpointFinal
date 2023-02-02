@@ -2,7 +2,7 @@
   <nav
     class="navbar navbar-expand-lg d-block d-md-none fixed-bottom footer-button navbar-light bg-light m-0 justify-content-around my-3 d-flex">
     <div class="col-3 m-0 d-flex p-2">
-      <div class="dropup dropup-center" v-if="user != null">
+      <div class="dropup dropup-center" title="Create Menu" v-if="user != null">
         <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
           <i class="mdi mdi-dots-vertical"></i>

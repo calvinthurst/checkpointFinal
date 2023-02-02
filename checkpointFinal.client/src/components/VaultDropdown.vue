@@ -1,10 +1,10 @@
 <template>
   <div class="border border-rounded"></div>
-  <form action="" @submit.prevent="addToVault()" class="d-flex">
+  <form title="Vault Options" @submit.prevent="addToVault()" class="d-flex">
     <select class="form-select" aria-label="Default select example" required id="dropdown" v-model="editable">
       <option :value="v.id" v-for="v in myVaults">{{ v.name }}</option>
     </select>
-    <button class="btn btn-success">Add</button>
+    <button title="Add to Vault" class="btn btn-success">Add</button>
   </form>
 
 </template>

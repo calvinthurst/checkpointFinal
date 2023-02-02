@@ -2,11 +2,8 @@
   <div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-down modal-xl">
       <div class="modal-content modal-body">
-        <div class="modal-header sticky-top bg-white">
-          <slot name="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ modalTitle }}</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </slot>
+        <div class="modal-header bg-white d-none">
+
         </div>
 
         <slot></slot>
@@ -54,5 +51,6 @@ export default {
 .bg-white {
   background-color: white;
   border: none;
+  height: 0vh;
 }
 </style>

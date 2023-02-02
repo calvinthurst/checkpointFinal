@@ -1,6 +1,7 @@
 <template>
-  <div @click="setKeepActive(keep.id)" class="keep-card row justify-content-between align-items-end mx-0"
-    data-bs-toggle="modal" data-bs-target="#keep-modal">
+  <div @click="setKeepActive(keep.id)" :title="keep.name"
+    class="keep-card row justify-content-between align-items-end mx-0" data-bs-toggle="modal"
+    data-bs-target="#keep-modal">
     <div class="bg-keep-creator">
       <div class=" text-light grid-item align-items-center d-flex justify-content-between m-1">
         <div class="fs-5 fw-bold  title-bg">{{ keep.name }}</div>
@@ -10,7 +11,9 @@
     </div>
   </div>
 
-
+  <Modal id="keep-modal" modal-title=Keep>
+    <KeepModal />
+  </Modal>
 
 
 </template>
@@ -86,8 +89,8 @@ export default {
 }
 
 .profile-pic {
-  width: 5vh;
-  height: 5vh;
+  max-width: 5vh;
+  max-height: 5vh;
   border-radius: 50%;
   object-fit: cover;
   object-position: center;

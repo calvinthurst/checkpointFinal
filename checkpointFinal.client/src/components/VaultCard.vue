@@ -1,15 +1,15 @@
 <template>
   <div class="d-flex justify-content-end">
-    <i @click="deleteVault()" v-if="route?.name == `Account`"
+    <i @click="deleteVault()" title="Delete Vault" v-if="route?.name == `Account`"
       class="mdi mdi-trash-can-outline text-end delete-btn  text-danger">
     </i>
   </div>
   <RouterLink :to="{
     name: 'Vault', params: { id: vault.id }
   }">
-    <div class="coverImg text-light d-flex justify-content-between align-items-end">
+    <div :title="vault.name" class="coverImg text-light d-flex justify-content-between align-items-end">
 
-      <p @click="activateVault()" class="fw-bold ">{{ vault.name }}</p>
+      <p @click="activateVault()" class="fw-bold p-2 ">{{ vault.name }}</p>
       <div v-if="vault.isPrivate"><i class="mdi mdi-lock"></i></div>
     </div>
   </RouterLink>

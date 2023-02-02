@@ -1,15 +1,15 @@
 <template>
-  <form action="" @submit.prevent="editAccount()" class="justify-content-end">
+  <form title="Edit Account" @submit.prevent="editAccount()" class="justify-content-end">
     <div class="form-floating m-3">
-      <input type="text" class="form-control" id="name" v-model="editable.name" />
+      <input title="Name" type="text" class="form-control" id="name" v-model="editable.name" />
       <label for="name">Name</label>
     </div>
     <div class="form-floating m-3">
-      <input type="text" class="form-control" id="picture" v-model="editable.picture" />
+      <input title="Picture" type="text" class="form-control" id="picture" v-model="editable.picture" />
       <label for="picture">Picture</label>
     </div>
     <div class="form-floating m-3">
-      <input type="text" class="form-control" id="coverImg" v-model="editable.coverImg" />
+      <input title="Cover Image" type="text" class="form-control" id="coverImg" v-model="editable.coverImg" />
       <label for="coverImg">Cover Image</label>
     </div>
     <div class="justify-content-around modal-footer">

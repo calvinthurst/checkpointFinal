@@ -2,22 +2,24 @@
   <nav class="navbar navbar-expand-lg  navbar-light bg-light justify-content-between ">
     <div class="col-3  d-flex  justify-content-end">
       <router-link class="navbar-brand  d-flex" :to="{ name: 'Home' }">
-        <div class="flex-column align-items-center fw-bold">
+        <div title="Home" class="flex-column align-items-center fw-bold">
           HOME </div>
       </router-link>
-      <div class="dropdown d-none d-md-block justify-content-end" v-if="user != null">
+      <div title="Create Menu" class="dropdown d-none d-md-block justify-content-end" v-if="user != null">
         <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown"
           aria-expanded="false">
           Create
         </a>
         <ul class="dropdown-menu">
           <li>
-            <div class="text-secondary fw-bold selectable " data-bs-toggle="modal" data-bs-target="#keep-form">
+            <div title="Create Keep" class="text-secondary fw-bold selectable mb-2 " data-bs-toggle="modal"
+              data-bs-target="#keep-form">
               Create
               Keep</div>
           </li>
           <li>
-            <div class="text-secondary fw-bold selectable " data-bs-toggle="modal" data-bs-target="#vault-form">
+            <div title="Create Vault" class="text-secondary fw-bold selectable " data-bs-toggle="modal"
+              data-bs-target="#vault-form">
               Create
               Vault <i class="mdi mdi-safe"></i></div>
           </li>
