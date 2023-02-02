@@ -1,9 +1,12 @@
 <template>
-  <section class="row align-items-center justify-content-center m-0">
-    <div v-for="k in keeps" class="col-3">
-      <KeepCard :keep="k" />
+  <div class="container">
+    <div class="masonry-with-columns">
+      <div v-for="k in keeps" class="">
+        <KeepCard :keep="k" />
+      </div>
     </div>
-  </section>
+  </div>
+
 </template>
 
 <script>
@@ -43,25 +46,53 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
+body {
+  margin: 0;
+  padding: 1rem;
+}
 
-  .home-card {
-    width: 50vw;
+.masonry-with-columns {
+  columns: 2 30vw;
+  column-gap: 1rem;
 
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
+  div {
+    margin: 0 1rem 1rem 0;
+    display: inline-block;
+    width: 100%;
   }
 
 
+
+  @for $i from 1 through 200 {
+    div:nth-child(#{$i}) {
+      $h: (random(45) + 20)+vh;
+      height: $h;
+      line-height: $h/2;
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+
+  .masonry-with-columns {
+    columns: 6 20vw;
+    column-gap: 1rem;
+
+    div {
+      margin: 0 1rem 1rem 0;
+      display: inline-block;
+      width: 100%;
+    }
+
+
+
+    @for $i from 1 through 200 {
+      div:nth-child(#{$i}) {
+        $h: (random(45) + 20)+vh;
+        height: $h;
+        line-height: $h/2;
+      }
+    }
+  }
 }
 </style>

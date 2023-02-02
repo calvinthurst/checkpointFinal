@@ -7,7 +7,11 @@
   <RouterLink :to="{
     name: 'Vault', params: { id: vault.id }
   }">
-    <p class="coverImg text-light" @click="activateVault()">{{ vault.name }}</p>
+    <div class="coverImg text-light d-flex justify-content-between align-items-end">
+
+      <p @click="activateVault()" class="fw-bold ">{{ vault.name }}</p>
+      <div v-if="vault.isPrivate"><i class="mdi mdi-lock"></i></div>
+    </div>
   </RouterLink>
 </template>
 
@@ -56,11 +60,15 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 30vh;
+  height: 20vh;
 }
 
 .delete-btn {
   transform: translate(-1vh, 4vh);
   cursor: pointer;
+}
+
+.vault {
+  background-color: rgba(0, 0, 0, 0.42);
 }
 </style>

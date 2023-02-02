@@ -5,7 +5,7 @@
       Login
     </button>
     <div v-else>
-      <div class="dropdown d-md-block d-none dropdown-center my-2 my-lg-0">
+      <div class="dropup dropup-center d-block d-md-none my-2 my-lg-0">
         <div type="button" class="bg-light border-0 no-select" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account?.picture || user?.picture">
             <img :src="account?.picture || user?.picture" alt="account photo" height="40" class="rounded" />

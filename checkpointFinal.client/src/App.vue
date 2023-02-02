@@ -1,10 +1,23 @@
 <template>
-  <header>
+  <header class="mx-0 gx-0 d-none d-md-block">
     <Navbar />
   </header>
-  <main class="bg-light">
+  <main class="bg-light gx-0 justify-content-center d-flex mx-0">
     <router-view />
   </main>
+  <footer class="mx-0 gx-0">
+    <CreateFooter />
+  </footer>
+
+  <Modal id="keep-form" modal-title="Create Keep">
+    <KeepForm />
+  </Modal>
+  <Modal id="vault-form" modal-title="Create Vault">
+    <VaultForm />
+  </Modal>
+  <Modal id="keep-modal" modal-title=Keep>
+    <KeepModal />
+  </Modal>
 </template>
 
 <script>
@@ -33,5 +46,9 @@ footer {
   display: grid;
   place-content: center;
   height: 32px;
+}
+
+body {
+  background-color: #e9ecef;
 }
 </style>

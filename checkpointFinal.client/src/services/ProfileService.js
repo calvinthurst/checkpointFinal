@@ -13,12 +13,12 @@ class ProfileService {
   }
   async getProfileKeeps(profileId) {
     const res = await api.get('api/profiles/' + profileId + '/keeps')
-    AppState.keeps = res.data.map(k => new Keeps(k))
+    AppState.profileKeeps = res.data.map(k => new Keeps(k))
     logger.log(AppState.keeps)
   }
   async getProfileVaults(profileId) {
     const res = await api.get('api/profiles/' + profileId + '/vaults')
-    AppState.vaults = res.data.map(v => new Vault(v))
+    AppState.profileVaults = res.data.map(v => new Vault(v))
     logger.log(AppState.vaults)
   }
 }

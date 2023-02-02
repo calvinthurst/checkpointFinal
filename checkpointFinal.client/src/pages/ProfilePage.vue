@@ -1,20 +1,22 @@
 <template>
-  <div class="container">
-    <div class="row align-items-center justify-content-center">
-      <div class="col-8">
-        <img :src="profile.coverImg" class="coverImg" alt="">
-      </div>
-      <div class="col-8 d-flex align-items-center justify-content-center">
-        <img :src="profile.picture" class="profile-pic rounded-circle" alt="">
-        <h1>{{ profile.name }}</h1>
-      </div>
-      <h4>Vaults</h4>
-      <div v-for="v in vaults" class="col-3">
+  <div class="row align-items-center justify-content-center m-0">
+    <img :src="profile.coverImg" class="coverImg" alt="">
+    <div class="col-8 d-flex align-items-center justify-content-center">
+      <img :src="profile.picture" class="profile-pic rounded-circle" alt="">
+      <h1>{{ profile.name }}</h1>
+    </div>
+    <div class="row align-items-center justify-content-center p-2">
+
+      <div class="text-center fs-5 fw-bold">{{ vaults.length }} vaults || {{ keeps.length }} keeps</div>
+      <h4 class="ps-4">Vaults</h4>
+      <div v-for="v in vaults" class="col-md-3 col-6 p-2">
         <VaultCard :vault="v" />
       </div>
-      <h4>Keeps</h4>
-      <div v-for="k in keeps" class="col-3">
-        <KeepCard :keep="k" />
+      <h4 class="px-3">Keeps</h4>
+      <div class="masonry-with-columns">
+        <div v-for="k in keeps">
+          <KeepCard :keep="k" />
+        </div>
       </div>
     </div>
   </div>
@@ -61,8 +63,8 @@ export default {
       getProfile();
     })
     return {
-      keeps: computed(() => AppState.keeps),
-      vaults: computed(() => AppState.vaults),
+      keeps: computed(() => AppState.profileKeeps),
+      vaults: computed(() => AppState.profileVaults),
       profile: computed(() => AppState.activeUser)
     }
   }
@@ -72,9 +74,10 @@ export default {
 
 <style lang="scss" scoped>
 .coverImg {
-  object-fit: contain;
+  height: 45vh;
+  max-width: 90%;
+  object-fit: cover;
   object-position: center;
-  max-height: 50vh;
 }
 
 .profile-pic {
@@ -82,5 +85,55 @@ export default {
   object-fit: cover;
   object-position: center;
 
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+}
+
+.masonry-with-columns {
+  columns: 6 40vw;
+  column-gap: 1rem;
+
+  div {
+    margin: 0 1rem 1rem 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+
+
+  @for $i from 1 through 200 {
+    div:nth-child(#{$i}) {
+      $h: (random(45) + 20)+vh;
+      height: $h;
+      line-height: $h/2;
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+
+  .masonry-with-columns {
+    columns: 4 20vw;
+    column-gap: 1rem;
+
+    div {
+      margin: 0 1rem 1rem 0;
+      display: inline-block;
+      width: 100%;
+    }
+
+
+
+    @for $i from 1 through 200 {
+      div:nth-child(#{$i}) {
+        $h: (random(45) + 20)+vh;
+        height: $h;
+        line-height: $h/2;
+      }
+    }
+  }
 }
 </style>

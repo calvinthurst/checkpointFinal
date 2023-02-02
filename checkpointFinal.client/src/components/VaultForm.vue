@@ -48,7 +48,7 @@ export default {
       async createVault() {
         try {
           await vaultService.createVault(editable.value)
-          Modal.getOrCreateInstance.hide('#vault-modal')
+          Modal.getOrCreateInstance('#vault-form').hide()
         } catch (error) {
           logger.log(error)
           Pop.error(error)

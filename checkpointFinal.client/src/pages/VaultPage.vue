@@ -1,5 +1,46 @@
 <template>
-  <div v-if="keeps.length == 0" class="text-center">
+  <div v-if="vault && vault.isPrivate && vault.creatorId != account?.id">
+    <h1>Private Vault</h1>
+    <h3>Redirecting to Home</h3>
+    <div id="floatingBarsG">
+      <div class="blockG" id="rotateG_01"></div>
+      <div class="blockG" id="rotateG_02"></div>
+      <div class="blockG" id="rotateG_03"></div>
+      <div class="blockG" id="rotateG_04"></div>
+      <div class="blockG" id="rotateG_05"></div>
+      <div class="blockG" id="rotateG_06"></div>
+      <div class="blockG" id="rotateG_07"></div>
+      <div class="blockG" id="rotateG_08"></div>
+    </div>
+  </div>
+
+
+  <div v-else-if="vault && keeps.length != 0">
+    <section class="row justify-content-center ">
+      <div class="fs-2 fw-semibold text-center col-10">{{ vault.name }}</div>
+      <div class="text-center col-10">{{ vault.description }}</div>
+      <img :src="vault?.img" class="vault-coverImg text-center" alt="">
+      <div class="text-center fs-5 fw-bold rounded-pill col-3 length">{{ keeps.length }} keeps</div>
+      <div class="masonry-with-columns">
+        <div v-for="k in keeps" class="m-3">
+          <KeepCard :keep="k" />
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <div v-else class="text-center">
+    <section class="row justify-content-center ">
+      <div class="fs-2 fw-semibold text-center col-10">{{ vault?.name }}</div>
+      <div class="text-center col-10">{{ vault?.description }}</div>
+      <img :src="vault?.img" class="vault-coverImg text-center" alt="">
+      <div class="masonry-with-columns">
+        <div v-for="k in keeps" class="m-3">
+          <KeepCard :keep="k" />
+        </div>
+      </div>
+    </section>
     <h1>Vault Is empty</h1>
     <h3>Redirecting...</h3>
     <div id="floatingBarsG">
@@ -13,25 +54,6 @@
       <div class="blockG" id="rotateG_08"></div>
     </div>
   </div>
-  <div class="container " v-else-if="vault">
-    <section class="row justify-content-center ">
-      <div class="col-8 justify-content-center">
-        <h1>{{ vault.name }}</h1>
-        <p>{{ vault.description }}</p>
-        <img :src="vault.img" alt="">
-      </div>
-      <div v-for="k in keeps" class="col-3">
-        <KeepCard :keep="k" class="masonry" />
-      </div>
-    </section>
-  </div>
-
-  <div v-else>
-    <h1>Private Vault</h1>
-    <h3>Redirecting to Home</h3>
-    <img src="" alt="">
-  </div>
-
 </template>
 
 
@@ -43,6 +65,7 @@ import Pop from "../utils/Pop.js";
 import { logger } from "../utils/Logger.js";
 import { keepsService } from "../services/KeepsService.js";
 import { vaultService } from "../services/VaultService.js";
+import { accountService } from "../services/AccountService.js";
 export default {
   setup() {
     const route = useRoute()
@@ -50,33 +73,35 @@ export default {
     async function getKeepsByVaultId() {
       try {
         await keepsService.getKeepsByVaultId(route.params.id)
-        if (AppState.keeps.length == 0) {
-          setTimeout(() => {
-            router.push({ name: 'Home' })
-          }, 5000)
-        }
       } catch (error) {
-        isPrivate.value = true
-        setTimeout(() => {
-          router.push({ name: 'Home' })
-        }, 5000)
+        logger.log(error)
       }
     }
     async function activateVault() {
       try {
         await vaultService.activateVault(route.params.id)
+        await getKeepsByVaultId()
+        if (AppState.KeepsInVault.length == 0) {
+          setTimeout(() => {
+            router.push({ name: 'Account' })
+          }, 3000)
+        }
       } catch (error) {
-        logger.log(error)
-        Pop.error(error)
+        setTimeout(() => {
+          router.push({ name: 'Home' })
+        }, 3000)
       }
     }
+
     onMounted(() => {
-      getKeepsByVaultId();
       activateVault();
+      // getKeepsByVaultId();
     })
     return {
-      keeps: computed(() => AppState.keeps),
-      vault: computed(() => AppState.vault)
+      keeps: computed(() => AppState.KeepsInVault),
+      account: computed(() => AppState.account),
+      vault: computed(() => AppState.vault),
+
     }
   }
 };
@@ -84,17 +109,66 @@ export default {
 
 
 <style lang="scss" scoped>
-.masonry {
-  columns: 4;
-}
-
-html,
-body {
-  height: 100%;
-}
-
 body {
   margin: 0;
+  padding: 1rem;
+}
+
+.length {
+  background-color: rgba(0, 0, 0, 0.343);
+}
+
+.vault-coverImg {
+  height: 45vh;
+  max-width: 90%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+.masonry-with-columns {
+  columns: 6 40vw;
+  column-gap: 1rem;
+
+  div {
+    margin: 0 1rem 1rem 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+
+
+  @for $i from 1 through 200 {
+    div:nth-child(#{$i}) {
+      $h: (random(45) + 20)+vh;
+      height: $h;
+      line-height: $h/2;
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+
+  .masonry-with-columns {
+    columns: 4 20vw;
+    column-gap: 1rem;
+
+    div {
+      margin: 0 1rem 1rem 0;
+      display: inline-block;
+      width: 100%;
+    }
+
+
+
+    @for $i from 1 through 200 {
+      div:nth-child(#{$i}) {
+        $h: (random(45) + 20)+vh;
+        height: $h;
+        line-height: $h/2;
+      }
+    }
+  }
 }
 
 #floatingBarsG {

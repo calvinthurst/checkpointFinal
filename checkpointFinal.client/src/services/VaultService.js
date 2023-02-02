@@ -16,7 +16,7 @@ class VaultService {
   }
   async createVault(formData) {
     const res = await api.post('api/vaults', formData)
-    AppState.myVaults = AppState.myVaults.unshift(new Vault(res.data))
+    AppState.myVaults.push(new Vault(res.data))
   }
   async deleteVault(vaultId) {
     await api.delete('api/vaults/' + vaultId)

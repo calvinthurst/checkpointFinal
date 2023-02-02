@@ -1,26 +1,39 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 justify-content-between my-3">
-    <div class="d-flex align-items-center justify-content-between col-3" v-if="user != null">
-      <button class="btn btn-outline-secondary fw-bold " data-bs-toggle="modal" data-bs-target="#keep-form">Create
-        Keep</button>
-      <Modal id="keep-form" modal-title="Create Keep">
-        <KeepForm />
-      </Modal>
-      <button class="btn btn-outline-secondary fw-bold " data-bs-toggle="modal" data-bs-target="#vault-form">Create
-        Vault<i class="mdi mdi-safe"></i></button>
-      <Modal id="vault-form" modal-title="Create Vault">
-        <VaultForm />
-      </Modal>
+  <nav class="navbar navbar-expand-lg  navbar-light bg-light justify-content-between ">
+    <div class="col-3  d-flex  justify-content-end">
+      <router-link class="navbar-brand  d-flex" :to="{ name: 'Home' }">
+        <div class="flex-column align-items-center fw-bold">
+          HOME </div>
+      </router-link>
+      <div class="dropdown d-none d-md-block justify-content-end" v-if="user != null">
+        <a class="btn btn-outline-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Create
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <div class="text-secondary fw-bold selectable " data-bs-toggle="modal" data-bs-target="#keep-form">
+              Create
+              Keep</div>
+          </li>
+          <li>
+            <div class="text-secondary fw-bold selectable " data-bs-toggle="modal" data-bs-target="#vault-form">
+              Create
+              Vault <i class="mdi mdi-safe"></i></div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="col-3 text-light loggin" v-else>KEEPERS</div>
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center fw-bold col-3">
+
+
+    <router-link class="navbar-brand col-3 text-center " :to="{ name: 'Home' }">
+      <div class="flex-column align-items-center fw-bold ">
         Keepers
       </div>
     </router-link>
 
     <!-- LOGIN COMPONENT HERE -->
-    <Login class="col-2" />
+    <Login class="col-3 text-center px-3" />
   </nav>
 </template>
 
@@ -57,5 +70,9 @@ a:hover {
 
 .loggin {
   user-select: none;
+}
+
+.logo-brand {
+  justify-content: center;
 }
 </style>
