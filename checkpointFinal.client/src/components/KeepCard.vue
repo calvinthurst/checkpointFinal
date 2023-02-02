@@ -1,19 +1,16 @@
 <template>
-  <div class="d-flex justify-content-end">
-    <i @click="deleteKeep()" v-if="route?.name == `Account`"
-      class="mdi mdi-trash-can-outline text-end delete-btn  text-danger">
-    </i>
-  </div>
-  <div @click="setKeepActive(keep.id)" class="keep-card text-light grid-item " data-bs-toggle="modal"
-    data-bs-target="#keep-modal">
-    <h1>
-      {{ keep.name }}
-    </h1>
+  <div @click="setKeepActive(keep.id)" class="keep-card row justify-content-between align-items-end mx-0"
+    data-bs-toggle="modal" data-bs-target="#keep-modal">
+    <div class="bg-keep-creator">
+      <div class=" text-light grid-item align-items-center d-flex justify-content-between m-1">
+        <div class="fs-5 fw-bold  title-bg">{{ keep.name }}</div>
+        <img v-if="route.name != 'Account'" :src="keep.creator.picture" :title="keep.creator.name"
+          class="profile-pic d-none d-md-block rounded-circle m-1" alt="">
+      </div>
+    </div>
   </div>
 
-  <Modal id="keep-modal" :modal-title="keep.name">
-    <KeepModal />
-  </Modal>
+
 
 
 </template>
@@ -58,6 +55,9 @@ export default {
           Pop.error(error)
         }
       },
+      watchEffect: onMounted(() => {
+        AppState.keep = props.keep
+      }),
 
       coverImg: computed(() => `url(${props.keep.img})`)
     };
@@ -70,21 +70,26 @@ export default {
 <style lang="scss" scoped>
 .keep-card {
   background-image: v-bind(coverImg);
-  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 30vh;
-}
-
-.modal-img {
+  background-position: center;
   width: 100%;
-  object-fit: contain;
-  object-position: center;
-  height: 100;
+  height: inherit;
 }
 
 .delete-btn {
-  transform: translate(-1vh, 4vh);
   cursor: pointer;
+}
+
+.bg-keep-creator {
+  background-color: rgba(0, 0, 0, 0.322);
+}
+
+.profile-pic {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 </style>
